@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BankWebApp.Data;
+using BankWebApp.Models.Services;
+
 namespace BankWebApp
 {
     public class Program
@@ -13,6 +15,8 @@ namespace BankWebApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<AccountService>();
 
             var app = builder.Build();
 
