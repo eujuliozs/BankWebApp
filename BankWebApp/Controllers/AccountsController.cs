@@ -12,7 +12,7 @@ namespace BankWebApp.Controllers
         {
             _accountService = accountService;
         }
-        public IActionResult Index()
+        public IActionResult Index(Account acc)
         {
             return View();
         }
@@ -27,6 +27,22 @@ namespace BankWebApp.Controllers
         {
             _accountService.InsertOwner(ow);
             return View("Created",ow);
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Logged(Account acc)
+        {
+            if (acc == null) 
+            {
+                return NotFound(); 
+            }
+            if (_accountService.Login != null)
+            {
+                return RedirectToAction(nameof(Index),acc);
+            }
+            return NotFound();
         }
     }
 }

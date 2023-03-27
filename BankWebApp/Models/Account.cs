@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BankWebApp.Models
 {
@@ -13,7 +14,7 @@ namespace BankWebApp.Models
         {
 
         }
-        public Account(int id, double balance, string number)
+        public Account(int id, double balance)
         {
             Id = id;
             Balance = balance;

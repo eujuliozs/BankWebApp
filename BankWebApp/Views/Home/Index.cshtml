@@ -1,7 +1,8 @@
-﻿@{
+﻿@model Account
+@{
     ViewData["Title"] = "Home Page";
 }
 <div class="justify-content-center">
-    <button type="button" class="btn btn-primary btn-lg btn-block" asp-controller="" asp-action="">Ja tenho conta</button>
-    <a type="button" class="btn btn-secondary btn-lg btn-block" asp-controller="Accounts" asp-action="Create">Criar conta</a>
+    <a type="button" class="btn btn-primary btn-lg btn-block" asp-controller="Accounts" asp-action="Login">Already have an Account</a>
+    <a type="button" class="btn btn-secondary btn-lg btn-block" asp-controller="Accounts" asp-action="Create">Create Account</a>
 </div>
