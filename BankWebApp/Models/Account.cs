@@ -6,7 +6,11 @@
         public double Balance { get; set; }
         public string Number { get; private set; } = GenerateNumber();
         public int OwnerId { get; set; }
+        public string Password { get; set; }
+        public Account()
+        {
 
+        }
         public Account(int id, double balance, string number, int ownerId)
         {
             Id = id;
