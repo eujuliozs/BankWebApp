@@ -1,6 +1,7 @@
 ﻿using BankWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using BankWebApp.Models.ViewModel;
 
 namespace BankWebApp.Controllers
 {
