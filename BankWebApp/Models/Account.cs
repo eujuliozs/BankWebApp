@@ -1,4 +1,6 @@
-﻿namespace BankWebApp.Models
+﻿using System.Collections.Generic;
+
+namespace BankWebApp.Models
 {
     public class Account
     {
@@ -15,17 +17,24 @@
         {
             Id = id;
             Balance = balance;
-            Number = number;
+
         }
-        public static string GenerateNumber()
+        static string GenerateNumber()
         {
-            var rd = new Random();
-            var list = new List<int>();
-            for(int i = 0;i < 10; i++)
+            string lst = "";
+            Random random = new Random();
+            for (int i = 0; i < 9; i++)
             {
-                list.Add(rd.Next(10));
+                if (i == 8)
+                {
+                    lst += "-";
+                }
+                string str = random.Next(10).ToString();
+                lst += str;
             }
-            return list.ToString();
+            return lst.ToString();
+
         }
+
     }
 }

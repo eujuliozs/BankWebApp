@@ -26,7 +26,7 @@ namespace BankWebApp.Controllers
         public IActionResult Create(Owner ow) 
         {
             _accountService.InsertOwner(ow);
-            return View("Created");
+            return View("Created",ow);
         }
     }
 }

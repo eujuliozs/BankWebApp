@@ -1,7 +1,12 @@
-﻿<h1>
+﻿@model Owner
+<h1>
     <div class="justify-content-xxl-center">
         <h2>
-            Parabéns conta criada com sucesso!
+            Congratulations! Account Created Sucessfuly
         </h2>
+        <h3>Your Account number is: @Html.DisplayFor(ow => ow.Account.Number)</h3>
+    </div>
+    <div>
+        <a type="button" class="btn btn-dark btn-lg btn-block" asp-controller="Home" asp-action="Index">Back to Home</a>
     </div>
 </h1>

@@ -20,6 +20,5 @@ namespace BankWebApp.Models.Services
             _context.Add(ow);
             _context.SaveChanges();
         }
-
     }
 }

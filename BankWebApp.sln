@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankWebApp", "BankWebApp\BankWebApp.csproj", "{E8113891-5AF5-4A7B-A96E-3F5F06711055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankWebApp", "BankWebApp\BankWebApp.csproj", "{E8113891-5AF5-4A7B-A96E-3F5F06711055}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TEstando gerador de numeros", "TEstando gerador de numeros\TEstando gerador de numeros.csproj", "{8FBA27DE-36AD-42CA-ADED-EB05B001B992}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E8113891-5AF5-4A7B-A96E-3F5F06711055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8113891-5AF5-4A7B-A96E-3F5F06711055}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8113891-5AF5-4A7B-A96E-3F5F06711055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FBA27DE-36AD-42CA-ADED-EB05B001B992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FBA27DE-36AD-42CA-ADED-EB05B001B992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FBA27DE-36AD-42CA-ADED-EB05B001B992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FBA27DE-36AD-42CA-ADED-EB05B001B992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
