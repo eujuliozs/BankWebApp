@@ -10,6 +10,16 @@ namespace BankWebApp.Models.Services
         {
             _context = context;
         }
+        public void Insert(Account acc)
+        {
+            _context.Add(acc);
+            _context.SaveChanges();
+        }
+        public void InsertOwner(Owner ow)
+        {
+            _context.Add(ow);
+            _context.SaveChanges();
+        }
 
     }
 }

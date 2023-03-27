@@ -3,7 +3,7 @@
     public class Account
     {
         public int Id { get; set; }
-        public double Balance { get; set; }
+        public double Balance { get; set; } = 0;
         public string Number { get; private set; } = GenerateNumber();
         public int OwnerId { get; set; }
         public string Password { get; set; }
@@ -11,12 +11,11 @@
         {
 
         }
-        public Account(int id, double balance, string number, int ownerId)
+        public Account(int id, double balance, string number)
         {
             Id = id;
             Balance = balance;
             Number = number;
-            OwnerId = ownerId;
         }
         public static string GenerateNumber()
         {
