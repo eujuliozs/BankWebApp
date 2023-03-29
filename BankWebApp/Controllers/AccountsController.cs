@@ -1,4 +1,5 @@
 ﻿using BankWebApp.Models;
+using BankWebApp.Models.Services.Exceptions;
 using BankWebApp.Models.Services;
 using BankWebApp.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,12 @@ namespace BankWebApp.Controllers
         {
             _accountService = accountService;
         }
-        public IActionResult Index(Account acc)
+        public IActionResult Index(Account? acc)
         {
+            if(acc is null)
+            {
+                throw new NotLoggedException("Você não está logado");
+            }
             return View();
         }
         public IActionResult Create()
@@ -26,23 +31,21 @@ namespace BankWebApp.Controllers
         public IActionResult Create(Owner ow) 
         {
             _accountService.InsertOwner(ow);
-            return View("Created",ow);
+            return View("Created", ow);
         }
         public IActionResult Login()
         {
-            return View();
+            var viewmodel = new LoginForm();
+            return View(viewmodel);
         }
-        public IActionResult Logged(Account acc)
+        public IActionResult Logged(LoginForm data)
         {
-            if (acc == null) 
+            Account acc = _accountService.Login(data.AccNumber, data.Password);
+            if(acc is null)
             {
-                return NotFound(); 
+                return NotFound();
             }
-            if (_accountService.Login != null)
-            {
-                return RedirectToAction(nameof(Index),acc);
-            }
-            return NotFound();
+            return RedirectToAction(nameof(Index), acc);
         }
     }
 }
