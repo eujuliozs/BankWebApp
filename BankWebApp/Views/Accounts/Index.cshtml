@@ -1,4 +1,9 @@
-﻿
+﻿@model BankWebApp.Models.ViewModel.AccountMenuViewModel
+@{
+    Layout = "AccountsLayout";
+    ViewData["Number"] = Model.AccNumber;
+    ViewData["Owner"] = Model.OwnersName;
+}
 <div class="justify-content-center">
     <h2>Your Account Menu</h2>
     <hr />

@@ -13,14 +13,19 @@ namespace BankWebApp.Controllers
         {
             _accountService = accountService;
         }
+        // ações relacionadas a ações da conta
         public IActionResult Index(Account? acc)
         {
             if(acc is null)
             {
                 throw new NotLoggedException("Você não está logado");
             }
-            return View();
+            var accnumber = _accountService.GetNumber(acc);
+            var owner = _accountService.GetOwnersName(acc);
+            var viewmodel = new AccountMenuViewModel() {AccNumber=accnumber,OwnersName=owner };
+            return View(viewmodel);
         }
+        // Ações todas relacionadas a login e a criar uma conta 
         public IActionResult Create()
         {
             var Owner = new Owner();

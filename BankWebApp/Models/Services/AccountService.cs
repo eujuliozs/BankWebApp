@@ -1,5 +1,6 @@
 ﻿using BankWebApp.Data;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Security.Policy;
 
 namespace BankWebApp.Models.Services
 {
@@ -40,6 +41,19 @@ namespace BankWebApp.Models.Services
                 from Acc in _context.Account
                 where Acc.Id == id
                 select Acc;
+            return consulta.SingleOrDefault();
+        }
+        public string GetNumber(Account acc)
+        {
+            var account = FindByInd(acc.Id);
+            return account.Number;
+        }
+        public string GetOwnersName(Account acc)
+        {
+            var consulta = 
+                from onwer in _context.Owner
+                where onwer.Id == acc.OwnerId
+                select onwer.Name;
             return consulta.SingleOrDefault();
         }
     }
