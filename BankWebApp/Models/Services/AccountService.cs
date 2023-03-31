@@ -1,5 +1,7 @@
 ﻿using BankWebApp.Data;
+using BankWebApp.Models.Services.Exceptions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Linq.Expressions;
 using System.Security.Policy;
 
 namespace BankWebApp.Models.Services
@@ -48,13 +50,26 @@ namespace BankWebApp.Models.Services
             var account = FindByInd(acc.Id);
             return account.Number;
         }
-        public string GetOwnersName(Account acc)
+        public Owner GetOwner(Account acc)
         {
             var consulta = 
                 from onwer in _context.Owner
                 where onwer.Id == acc.OwnerId
-                select onwer.Name;
+                select onwer;
             return consulta.SingleOrDefault();
+        }
+        public Account AccNumberExists(string Number)
+        {
+            return _context.Account.Where(acc => acc.Number == Number).SingleOrDefault();
+        }
+        public void Deposit(TransactionRecord Tr)
+        {
+            var Sender = _context.Account.Where(acc => acc.Id == Tr.Account.Id).SingleOrDefault();
+            var acc = new Account() { Balance = Sender.Balance, Id = Sender.Id,OwnerId=Sender.OwnerId,
+            Transactions=Sender.Transactions, Number=Sender.Number, Password=Sender.Password};
+            _context.Remove(Sender);
+            _context.Add(acc);
+            _context.SaveChanges();
         }
     }
 }

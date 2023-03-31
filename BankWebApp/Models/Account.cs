@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Transactions;
 
 namespace BankWebApp.Models
 {
@@ -7,9 +8,10 @@ namespace BankWebApp.Models
     {
         public int Id { get; set; }
         public double Balance { get; set; } = 0;
-        public string Number { get; private set; } = GenerateNumber();
+        public string Number { get; set; } = GenerateNumber();
         public int OwnerId { get; set; }
         public string Password { get; set; }
+        public ICollection<TransactionRecord> Transactions { get; set; }
         public Account()
         {
 

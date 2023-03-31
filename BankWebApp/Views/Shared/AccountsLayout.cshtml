@@ -31,12 +31,12 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark">Deposit</a>
+                            <a asp-action="Deposit" class="nav-link text-dark">Deposit</a>
+                            <input type="hidden" asp-all-route-data="@ViewData["Number"] />
                         </li>
 
                         <li class="nav-item">
                             <a asp-action="WithDraw"class="nav-link text-dark">WithDraw</a>
-                            <input type="hidden "asp-for-id="Model"/>
                         </li>
                     </ul>
                 </div>

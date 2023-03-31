@@ -4,6 +4,7 @@ using BankWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankWebApp.Migrations
 {
     [DbContext(typeof(BankWebAppContext))]
-    partial class BankWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230329221819_AddTransactionRecord")]
+    partial class AddTransactionRecord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,36 +78,6 @@ namespace BankWebApp.Migrations
                     b.ToTable("Owner");
                 });
 
-            modelBuilder.Entity("BankWebApp.Models.TransactionRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("Moment")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReceiverNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("TransactionRecord");
-                });
-
             modelBuilder.Entity("BankWebApp.Models.Account", b =>
                 {
                     b.HasOne("BankWebApp.Models.Owner", null)
@@ -113,22 +85,6 @@ namespace BankWebApp.Migrations
                         .HasForeignKey("BankWebApp.Models.Account", "OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BankWebApp.Models.TransactionRecord", b =>
-                {
-                    b.HasOne("BankWebApp.Models.Account", "Account")
-                        .WithMany("MyProperty")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("BankWebApp.Models.Account", b =>
-                {
-                    b.Navigation("MyProperty");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.Owner", b =>

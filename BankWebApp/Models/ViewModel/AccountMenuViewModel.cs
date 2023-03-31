@@ -3,6 +3,7 @@
     public class AccountMenuViewModel
     {
         public string AccNumber { get; set; }
-        public string OwnersName { get; set; }
+        public Account Account { get; set; }
+        public Owner Owner { get; set; }
     }
 }
