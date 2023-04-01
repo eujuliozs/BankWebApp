@@ -66,7 +66,7 @@ namespace BankWebApp.Models.Services
         {
             var Sender = _context.Account.Where(acc => acc.Id == Tr.Account.Id).SingleOrDefault();
             var acc = new Account() { Balance = Sender.Balance, Id = Sender.Id,OwnerId=Sender.OwnerId,
-            Transactions=Sender.Transactions, Number=Sender.Number, Password=Sender.Password};
+            Transactions = Sender.Transactions, Number=Sender.Number, Password=Sender.Password};
             _context.Remove(Sender);
             _context.Add(acc);
             _context.SaveChanges();

@@ -4,10 +4,10 @@ using System.Transactions;
 
 namespace BankWebApp.Models
 {
-    public class Account
+    public class Account 
     {
         public int Id { get; set; }
-        public double Balance { get; set; } = 0;
+        public double? Balance { get; set; } = 0;
         public string Number { get; set; } = GenerateNumber();
         public int OwnerId { get; set; }
         public string Password { get; set; }
@@ -38,6 +38,21 @@ namespace BankWebApp.Models
             return lst.ToString();
 
         }
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode() + Number.GetHashCode();
+        }
+        public override bool Equals(object? obj)
+        {
+            if(!(obj is Account)) return false;
+
+            Account other = (Account)obj;
+            if (Id == other.Id && Number == other.Number) return true;
+
+            return false;
+        }
+
+
 
     }
 }
