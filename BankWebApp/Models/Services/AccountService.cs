@@ -27,7 +27,7 @@ namespace BankWebApp.Models.Services
         {
             var consulta =
                 from acc in _context.Account
-                where acc.Number == number ||
+                where acc.Number == number &&
                 acc.Password == password
                 select acc;
 
@@ -50,7 +50,7 @@ namespace BankWebApp.Models.Services
             var account = FindByInd(acc.Id);
             return account.Number;
         }
-        public Owner GetOwner(Account acc)
+        public Owner? GetOwner(Account acc)
         {
             var consulta = 
                 from onwer in _context.Owner
@@ -58,18 +58,33 @@ namespace BankWebApp.Models.Services
                 select onwer;
             return consulta.SingleOrDefault();
         }
-        public Account AccNumberExists(string Number)
+        public Account? AccNumberExists(string Number)
         {
             return _context.Account.Where(acc => acc.Number == Number).SingleOrDefault();
         }
         public void Deposit(TransactionRecord Tr)
         {
-            var Sender = _context.Account.Where(acc => acc.Id == Tr.Account.Id).SingleOrDefault();
-            var acc = new Account() { Balance = Sender.Balance, Id = Sender.Id,OwnerId=Sender.OwnerId,
-            Transactions = Sender.Transactions, Number=Sender.Number, Password=Sender.Password};
-            _context.Remove(Sender);
-            _context.Add(acc);
-            _context.SaveChanges();
+            if(Tr is null)
+            {
+                throw new ApplicationException("Tr vazio");
+            }
+
+            if (Tr.Account is null)
+            {
+                throw new NotLoggedException("Account came null");
+            }
+            Tr.Account.Balance += Tr.Amount;
+            Tr.Account.Transactions.Add(Tr);
+            _context.Account.Update(Tr.Account);
+            _context.SaveChanges();  
+        }
+        public Account? CheckPassword(Account acc,string password)
+        {
+            if(acc.Password == password)
+            {
+                return acc;
+            }
+            return null;
         }
     }
 }

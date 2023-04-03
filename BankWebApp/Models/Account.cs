@@ -1,17 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Transactions;
 
 namespace BankWebApp.Models
 {
-    public class Account 
+    public class Account
     {
         public int Id { get; set; }
-        public double? Balance { get; set; } = 0;
+        [DisplayFormat(DataFormatString = "{0:F2}")]
+        public double Balance { get; set; } = 0;
         public string Number { get; set; } = GenerateNumber();
+        [ForeignKey("Owner")]
         public int OwnerId { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get; set; }
-        public ICollection<TransactionRecord> Transactions { get; set; }
+        public ICollection<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
         public Account()
         {
 
@@ -26,9 +31,9 @@ namespace BankWebApp.Models
         {
             string lst = "";
             Random random = new Random();
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 5; i++)
             {
-                if (i == 8)
+                if (i == 4)
                 {
                     lst += "-";
                 }

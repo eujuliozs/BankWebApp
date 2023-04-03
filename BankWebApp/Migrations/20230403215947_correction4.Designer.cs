@@ -4,6 +4,7 @@ using BankWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankWebApp.Migrations
 {
     [DbContext(typeof(BankWebAppContext))]
-    partial class BankWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230403215947_correction4")]
+    partial class correction4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,9 +95,6 @@ namespace BankWebApp.Migrations
                     b.Property<DateTime>("Moment")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OwnerIdId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
@@ -103,9 +102,7 @@ namespace BankWebApp.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.HasIndex("OwnerIdId");
-
-                    b.ToTable("TransactionRecords");
+                    b.ToTable("TransactionRecord");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.Account", b =>
@@ -125,15 +122,7 @@ namespace BankWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BankWebApp.Models.Owner", "OwnerId")
-                        .WithMany()
-                        .HasForeignKey("OwnerIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Account");
-
-                    b.Navigation("OwnerId");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.Account", b =>

@@ -3,9 +3,14 @@
     Layout = "AccountsLayout";
     ViewData["Number"] = Model.AccNumber;
     ViewData["Owner"] = Model.Owner.Name;
+
 }
 <div class="justify-content-center">
     <h2>Your Account Menu</h2>
     <hr />
     <h4>Here is where you can acces all of your operations</h4>
+    <div class="btn-outline-primary" style="button">
+        <a asp-action="Deposit">Deposit</a>
+        <input type="hidden" asp-for="@Model.Account"/>
+    </div>
 </div>

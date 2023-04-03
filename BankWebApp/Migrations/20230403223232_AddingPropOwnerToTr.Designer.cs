@@ -4,6 +4,7 @@ using BankWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankWebApp.Migrations
 {
     [DbContext(typeof(BankWebAppContext))]
-    partial class BankWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230403223232_AddingPropOwnerToTr")]
+    partial class AddingPropOwnerToTr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,7 +95,7 @@ namespace BankWebApp.Migrations
                     b.Property<DateTime>("Moment")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OwnerIdId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
                     b.Property<int>("TransactionType")
@@ -103,7 +105,7 @@ namespace BankWebApp.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.HasIndex("OwnerIdId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("TransactionRecords");
                 });
@@ -125,15 +127,15 @@ namespace BankWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BankWebApp.Models.Owner", "OwnerId")
+                    b.HasOne("BankWebApp.Models.Owner", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerIdId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Account");
 
-                    b.Navigation("OwnerId");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.Account", b =>

@@ -3,6 +3,7 @@ using BankWebApp.Models.Services.Exceptions;
 using BankWebApp.Models.Services;
 using BankWebApp.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace BankWebApp.Controllers
 {
@@ -18,36 +19,48 @@ namespace BankWebApp.Controllers
         {
             if(acc is null)
             {
-                throw new NotLoggedException("Você não está logado");
+                return RedirectToAction(nameof(Error), "Not Logged");
             }
             var accnumber = _accountService.GetNumber(acc);
             var owner = _accountService.GetOwner(acc);
-            var viewmodel = new AccountMenuViewModel() {AccNumber=accnumber, Account=acc, Owner=owner};
+            var viewmodel = new AccountMenuViewModel{
+                AccNumber=accnumber,
+                Account=acc,
+                Owner=owner
+            };
             return View(viewmodel);
         }
-        public IActionResult Deposit(AccountMenuViewModel? viewModel)
+        public IActionResult Deposit(Account acc)
         {
-            if(viewModel is null)
+            if(acc is null)
             {
-                throw new NotLoggedException("Você não esta logado");
+                return RedirectToAction(nameof(Error), new { Message= "Bad Request"});
             }
-            var Tr = new TransactionRecord() { TransactionType=0, Account=viewModel.Account};
+            var Tr = new TransactionRecord() { TransactionType=0, Account=acc};
             return View(Tr);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Deposit(TransactionRecord? Tr)
+        public IActionResult DepositPost(TransactionRecord? Tr)
         {
-            if(Tr.Amount == null)
+            if(Tr.Amount == 0)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "Amount not provided"});
             }
-            var Result = _accountService.Login(Tr.Account.Number, Tr.Account.Password); 
+            var Result = _accountService.CheckPassword(Tr.Account, Tr.Account.Password); 
             if(Result is null)
             {
-                throw new WrongPasswordException("Incorrect Password");
+                return RedirectToAction(nameof(Error), new { Message = "Incorrect Password" });
             }
-            _accountService.Deposit(Tr);
+            try
+            {
+                _accountService.Deposit(Tr);
+            }
+            catch(ApplicationException ex)
+            {
+                return RedirectToAction(nameof(Error), new { Message = ex.Message });
+            }
+        
             return RedirectToAction(nameof(Index));
             
         }
@@ -74,9 +87,18 @@ namespace BankWebApp.Controllers
             Account acc = _accountService.Login(data.AccNumber, data.Password);
             if(acc is null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new {Message = "Login Info doesn't match"});
             }
             return RedirectToAction(nameof(Index), acc);
+        }
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }

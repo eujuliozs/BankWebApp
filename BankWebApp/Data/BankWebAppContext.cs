@@ -16,5 +16,6 @@ namespace BankWebApp.Data
 
         public DbSet<Owner> Owner { get; set; } = default!;
         public DbSet<Account> Account { get; set; } = default!;
+        public DbSet<TransactionRecord> TransactionRecords { get; set; }
     }
 }
