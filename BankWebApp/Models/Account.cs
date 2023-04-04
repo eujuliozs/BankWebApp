@@ -9,13 +9,9 @@ namespace BankWebApp.Models
     public class Account
     {
         public int Id { get; set; }
-        [DisplayFormat(DataFormatString = "{0:F2}")]
-        public double Balance { get; set; } = 0;
+        [DisplayFormat(DataFormatString = "{0:F2}")]  public double Balance { get; set; } = 0;
         public string Number { get; set; } = GenerateNumber();
-        [ForeignKey("Owner")]
-        public int OwnerId { get; set; }
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        [DataType(DataType.Password)] public string Password { get; set; }
         public ICollection<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
         public Account()
         {

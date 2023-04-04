@@ -4,6 +4,7 @@ using BankWebApp.Models.Services;
 using BankWebApp.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace BankWebApp.Controllers
 {
@@ -19,14 +20,13 @@ namespace BankWebApp.Controllers
         {
             if(acc is null)
             {
-                return RedirectToAction(nameof(Error), "Not Logged");
+                return RedirectToAction(nameof(Error), new { Message = "Not Logged" });
             }
             var accnumber = _accountService.GetNumber(acc);
-            var owner = _accountService.GetOwner(acc);
+
             var viewmodel = new AccountMenuViewModel{
                 AccNumber=accnumber,
                 Account=acc,
-                Owner=owner
             };
             return View(viewmodel);
         }
@@ -43,10 +43,7 @@ namespace BankWebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DepositPost(TransactionRecord? Tr)
         {
-            if(Tr.Amount == 0)
-            {
-                return RedirectToAction(nameof(Error), new { Message = "Amount not provided"});
-            }
+
             var Result = _accountService.CheckPassword(Tr.Account, Tr.Account.Password); 
             if(Result is null)
             {
@@ -67,15 +64,13 @@ namespace BankWebApp.Controllers
         // Ações todas relacionadas a login e a criar uma conta 
         public IActionResult Create()
         {
-            var Owner = new Owner();
-            return View(Owner);
+            return View();
         }
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public IActionResult Create(Owner ow) 
+        public IActionResult Create(string msg) 
         {
-            _accountService.InsertOwner(ow);
-            return View("Created", ow);
+            return View();
         }
         public IActionResult Login()
         {
@@ -89,7 +84,7 @@ namespace BankWebApp.Controllers
             {
                 return RedirectToAction(nameof(Error), new {Message = "Login Info doesn't match"});
             }
-            return RedirectToAction(nameof(Index), acc);
+            return RedirectToAction(nameof(Index), _accountService.EagerAccount(acc));
         }
         public IActionResult Error(string message)
         {

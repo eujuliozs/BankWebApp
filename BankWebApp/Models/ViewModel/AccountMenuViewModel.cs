@@ -5,7 +5,7 @@ namespace BankWebApp.Models.ViewModel
     {
         public string AccNumber { get; set; }
         public Account Account { get; set; }
-        public Owner Owner { get; set; }
-        public List<TransactionType> Operations = Enum.GetValues(typeof(TransactionType)).Cast<TransactionType>().ToList();
+        public string OwnerName { get; set; }
+
     }
 }

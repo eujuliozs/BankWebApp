@@ -1,6 +1,7 @@
 ﻿using BankWebApp.Data;
 using BankWebApp.Models.Services.Exceptions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Security.Policy;
 
@@ -18,11 +19,7 @@ namespace BankWebApp.Models.Services
             _context.Add(acc);
             _context.SaveChanges();
         }
-        public void InsertOwner(Owner ow)
-        {
-            _context.Add(ow);
-            _context.SaveChanges();
-        }
+
         public Account? Login(string number, string password) 
         {
             var consulta =
@@ -50,14 +47,6 @@ namespace BankWebApp.Models.Services
             var account = FindByInd(acc.Id);
             return account.Number;
         }
-        public Owner? GetOwner(Account acc)
-        {
-            var consulta = 
-                from onwer in _context.Owner
-                where onwer.Id == acc.OwnerId
-                select onwer;
-            return consulta.SingleOrDefault();
-        }
         public Account? AccNumberExists(string Number)
         {
             return _context.Account.Where(acc => acc.Number == Number).SingleOrDefault();
@@ -73,9 +62,7 @@ namespace BankWebApp.Models.Services
             {
                 throw new NotLoggedException("Account came null");
             }
-            Tr.Account.Balance += Tr.Amount;
-            Tr.Account.Transactions.Add(Tr);
-            _context.Account.Update(Tr.Account);
+            _context.TransactionRecord.Add(Tr);
             _context.SaveChanges();  
         }
         public Account? CheckPassword(Account acc,string password)
@@ -85,6 +72,10 @@ namespace BankWebApp.Models.Services
                 return acc;
             }
             return null;
+        }
+        public Account? EagerAccount(Account acc)
+        {
+            return acc;
         }
     }
 }
