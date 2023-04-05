@@ -8,10 +8,29 @@ namespace BankWebApp.Models
 {
     public class Account
     {
+     
         public int Id { get; set; }
-        [DisplayFormat(DataFormatString = "{0:F2}")]  public double Balance { get; set; } = 0;
+
+        [Required(ErrorMessage ="Account's Holder name is required")] 
+        [StringLength(100,MinimumLength =3)] 
+        public string Holder { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Birth Date")]
+        public DateTime HolderBirthDate { get; set; }
+
+        [Required]
+        public string Email{ get; set;}
+
+        [DisplayFormat(DataFormatString = "{0:F2}")]
+        public double Balance { get; set; } = 0;
         public string Number { get; set; } = GenerateNumber();
-        [DataType(DataType.Password)] public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(6, MinimumLength =4)]
+        public string Password { get; set; }
         public ICollection<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
         public Account()
         {
@@ -21,7 +40,6 @@ namespace BankWebApp.Models
         {
             Id = id;
             Balance = balance;
-
         }
         static string GenerateNumber()
         {
