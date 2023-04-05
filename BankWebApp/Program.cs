@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using BankWebApp.Data;
-using BankWebApp.Models.Services;
+using System.Configuration;
 
 namespace BankWebApp
 {
@@ -10,15 +9,9 @@ namespace BankWebApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<BankWebAppContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("BankWebAppContext") ?? throw new InvalidOperationException("Connection string 'BankWebAppContext' not found.")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            builder.Services.AddScoped<AccountService>();
-
-
 
             var app = builder.Build();   
             
