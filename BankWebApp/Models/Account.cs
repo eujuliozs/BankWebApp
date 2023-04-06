@@ -25,13 +25,13 @@ namespace BankWebApp.Models
 
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double Balance { get; set; } = 0;
-        public string Number { get; set; } = GenerateNumber();
+        public string Number { get; set; } 
 
         [Required]
         [DataType(DataType.Password)]
         [StringLength(6, MinimumLength =4, ErrorMessage = "Password must be between 4 and 6 characters")]
         public string Password { get; set; }
-        public ICollection<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
+        public List<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
         public Account()
         {
 
@@ -41,36 +41,6 @@ namespace BankWebApp.Models
             Id = id;
             Balance = balance;
         }
-        static string GenerateNumber()
-        {
-            string lst = "";
-            Random random = new Random();
-            for (int i = 0; i < 5; i++)
-            {
-                if (i == 4)
-                {
-                    lst += "-";
-                }
-                string str = random.Next(10).ToString();
-                lst += str;
-            }
-            return lst.ToString();
-
-        }
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode() + Number.GetHashCode();
-        }
-        public override bool Equals(object? obj)
-        {
-            if(!(obj is Account)) return false;
-
-            Account other = (Account)obj;
-            if (Id == other.Id && Number == other.Number) return true;
-
-            return false;
-        }
-
 
 
     }

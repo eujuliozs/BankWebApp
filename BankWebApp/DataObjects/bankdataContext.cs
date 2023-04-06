@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using BankWebApp.Models;
-using BankWebApp.Models.Enums;
 
 namespace BankWebApp.DataObjects
 {
@@ -38,6 +37,5 @@ namespace BankWebApp.DataObjects
 
         public DbSet<Account>? Account { get; set; } = default!;
         public DbSet<TransactionRecord>? TransactionRecords { get; set; } = default!;
-        public DbSet<TransactionType>? TransactionTypes { get; set; } = default!;
     }
 }

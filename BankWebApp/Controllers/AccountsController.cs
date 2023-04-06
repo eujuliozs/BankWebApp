@@ -10,44 +10,30 @@ namespace BankWebApp.Controllers
     public class AccountsController : Controller
     {
         private readonly AccountService _accountService;
-        public AccountsController(AccountService accountService) 
+        public AccountsController(AccountService accountService)
         {
             _accountService = accountService;
         }
         //Actions Related to account operations
         public async Task<IActionResult> Index(Account acc)
         {
-            if(acc == null)
+            if (acc == null)
             {
-                return RedirectToAction(nameof(Error), new {Message="You are not logged"});
+                return RedirectToAction(nameof(Error), new { Message = "You are not logged" });
             }
             return View(acc);
         }
-        public IActionResult Deposit(int id)
-        {
-            var acc = _accountService.FindById(id);
-            var Tr = new TransactionRecord();
-            return View(Tr);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Deposit(TransactionRecord Tr)
-        {
-            return RedirectToAction(nameof(Index), Tr.Account);
-        }
-
-
         //Actions Related to account creation
         public IActionResult Create()
         {
-            Account account = new Account();
+            Account account = new Account() { Number=GenerateNumber()};
             return View(account);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Account? account)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(account);
             }
@@ -55,11 +41,11 @@ namespace BankWebApp.Controllers
             {
                 await _accountService.InsertAsync(account);
             }
-            catch (ApplicationException ex) 
+            catch (ApplicationException ex)
             {
                 RedirectToAction(nameof(Error), new { Message = ex.Message });
             }
-            return View("Created",account);
+            return View("Created", account);
 
         }
 
@@ -74,33 +60,50 @@ namespace BankWebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(LoginForm viewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
             try
             {
                 var query = _accountService.CheckIfLogged(viewModel.Number, viewModel.Password);
-                if(query is null) 
+                if (query is null)
                 {
-                    return RedirectToAction(nameof(Error), new {Message="Account doesn't exist"});
+                    return RedirectToAction(nameof(Error), new { Message = "Account doesn't exist" });
                 }
                 return RedirectToAction(nameof(Index), query);
             }
-            catch(ApplicationException ex) 
+            catch (ApplicationException ex)
             {
-                return RedirectToAction(nameof(Error),new {Message=ex.Message});
+                return RedirectToAction(nameof(Error), new { Message = ex.Message });
             }
         }
 
         public async Task<IActionResult> Error(string Message)
         {
-            var viewModel = new ErrorViewModel {
+            var viewModel = new ErrorViewModel
+            {
                 Message = Message,
-                RequestId=Activity.Current?.Id ?? HttpContext.TraceIdentifier            
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             };
             return View(viewModel);
-            
+
+        }
+        static string GenerateNumber()
+        {
+            string lst = "";
+            Random random = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 4)
+                {
+                    lst += "-";
+                }
+                string str = random.Next(10).ToString();
+                lst += str;
+            }
+            return lst.ToString();
+
         }
     }
 }

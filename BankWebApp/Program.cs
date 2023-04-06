@@ -20,6 +20,8 @@ namespace BankWebApp
 
             builder.Services.AddScoped<AccountService>();
 
+            builder.Services.AddScoped<TransactionService>();
+
             var app = builder.Build();   
             
 
