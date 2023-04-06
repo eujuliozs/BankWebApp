@@ -3,6 +3,7 @@ using BankWebApp.Models;
 using BankWebApp.Models.Service;
 using BankWebApp.Models.ViewModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace BankWebApp.Controllers
 {
@@ -13,9 +14,13 @@ namespace BankWebApp.Controllers
         {
             _accountService = accountService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(Account acc)
         {
-            return View();
+            if(acc == null)
+            {
+                return RedirectToAction(nameof(Error), new {Message="You are not logged"});
+            }
+            return View(acc);
         }
         public IActionResult Create()
         {
@@ -32,22 +37,44 @@ namespace BankWebApp.Controllers
             }
             try
             {
-                await _accountService.Insert(account);
+                await _accountService.InsertAsync(account);
             }
-            catch (Exception ex) 
+            catch (ApplicationException ex) 
             {
                 RedirectToAction(nameof(Error), new { Message = ex.Message });
             }
             return View("Created",account);
 
         }
-        [HttpPost]
         public IActionResult Login()
         {
-
+            return View(new LoginForm());
         }
 
-        public IActionResult Error(string Message)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginForm viewModel)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            try
+            {
+                var query = _accountService.CheckIfLogged(viewModel.Number, viewModel.Password);
+                if(query is null) 
+                {
+                    return RedirectToAction(nameof(Error), new {Message="Account doesn't exist"});
+                }
+                return RedirectToAction(nameof(Index), query);
+            }
+            catch(ApplicationException ex) 
+            {
+                return RedirectToAction(nameof(Error),new {Message=ex.Message});
+            }
+        }
+
+        public async Task<IActionResult> Error(string Message)
         {
             var viewModel = new ErrorViewModel {
                 Message = Message,

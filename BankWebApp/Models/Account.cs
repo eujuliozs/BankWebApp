@@ -12,7 +12,7 @@ namespace BankWebApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage ="Account's Holder name is required")] 
-        [StringLength(100,MinimumLength =3)] 
+        [StringLength(100,MinimumLength =3, ErrorMessage ="Minimum of 3 characters")] 
         public string Holder { get; set; }
 
         [Required]
@@ -21,6 +21,7 @@ namespace BankWebApp.Models
         public DateTime HolderBirthDate { get; set; }
 
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email{ get; set;}
 
         [DisplayFormat(DataFormatString = "{0:F2}")]
@@ -29,7 +30,7 @@ namespace BankWebApp.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(6, MinimumLength =4)]
+        [StringLength(6, MinimumLength =4, ErrorMessage = "Password must be between 4 and 6 characters")]
         public string Password { get; set; }
         public ICollection<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
         public Account()

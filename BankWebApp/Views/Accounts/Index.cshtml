@@ -1,0 +1,19 @@
+﻿@model Account
+@{
+    Layout = "AccountsLayout";
+    ViewData["Number"] = Model.Number;
+    ViewData["Owner"] = Model.Holder;
+}
+<div class="justify-content-center">
+    <h2>Your Account Menu</h2>
+    <hr />
+    <h4>Here is where you can acces all of your operations</h4>
+    <div class="col-md-6">
+        <div class="list-group-horizontal-xxl">
+            <a type="button" class="btn btn-secondary btn-lg btn-block" asp-action="Deposit">Deposit</a>
+        </div>
+        <div class="list-group-horizontal-xxl">
+            <a type="button" class="btn btn-secondary btn-lg btn-outline-light" asp-action="WithDraw">WithDraw</a>
+        </div>
+    </div>
+</div>
