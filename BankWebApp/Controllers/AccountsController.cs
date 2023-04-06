@@ -14,6 +14,7 @@ namespace BankWebApp.Controllers
         {
             _accountService = accountService;
         }
+        //Actions Related to account operations
         public async Task<IActionResult> Index(Account acc)
         {
             if(acc == null)
@@ -22,6 +23,21 @@ namespace BankWebApp.Controllers
             }
             return View(acc);
         }
+        public IActionResult Deposit(int id)
+        {
+            var acc = _accountService.FindById(id);
+            var Tr = new TransactionRecord();
+            return View(Tr);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Deposit(TransactionRecord Tr)
+        {
+            return RedirectToAction(nameof(Index), Tr.Account);
+        }
+
+
+        //Actions Related to account creation
         public IActionResult Create()
         {
             Account account = new Account();
@@ -46,6 +62,9 @@ namespace BankWebApp.Controllers
             return View("Created",account);
 
         }
+
+
+        // Actions Related to login + Error
         public IActionResult Login()
         {
             return View(new LoginForm());

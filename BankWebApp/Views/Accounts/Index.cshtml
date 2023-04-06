@@ -11,9 +11,12 @@
     <div class="col-md-6">
         <div class="list-group-horizontal-xxl">
             <a type="button" class="btn btn-secondary btn-lg btn-block" asp-action="Deposit">Deposit</a>
+            <input type="hidden" asp-for="Id"/>
         </div>
+        <hr />
         <div class="list-group-horizontal-xxl">
-            <a type="button" class="btn btn-secondary btn-lg btn-outline-light" asp-action="WithDraw">WithDraw</a>
+            <a type="button" class="btn btn-secondary btn-lg btn-block" asp-action="WithDraw">WithDraw</a>
+            <input type="hidden" asp-for="Id" />
         </div>
     </div>
 </div>

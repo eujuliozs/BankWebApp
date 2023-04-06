@@ -3,6 +3,7 @@ using System;
 using BankWebApp.DataObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankWebApp.Migrations
 {
     [DbContext(typeof(bankdataContext))]
-    partial class bankdataContextModelSnapshot : ModelSnapshot
+    [Migration("20230406160434_ChangedTransactionType")]
+    partial class ChangedTransactionType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,7 @@ namespace BankWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Account", (string)null);
+                    b.ToTable("Account");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.Enums.TransactionType", b =>
@@ -69,7 +71,7 @@ namespace BankWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionTypes", (string)null);
+                    b.ToTable("TransactionTypes");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.TransactionRecord", b =>
@@ -96,7 +98,7 @@ namespace BankWebApp.Migrations
 
                     b.HasIndex("TransactionTypeId");
 
-                    b.ToTable("TransactionRecords", (string)null);
+                    b.ToTable("TransactionRecords");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.TransactionRecord", b =>

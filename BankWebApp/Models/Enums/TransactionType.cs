@@ -1,8 +1,8 @@
 ﻿namespace BankWebApp.Models.Enums
 {
-    public enum TransactionType : int
+    public class TransactionType
     {
-        Deposit,
-        Withdraw
-    }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }   
 }

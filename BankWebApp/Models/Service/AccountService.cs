@@ -26,17 +26,17 @@ namespace BankWebApp.Models.Service
 
             return query.FirstOrDefault();
         }
-        public async Task<Account> FindByIdAsync(int? id)
+        public Account? FindById(int id)
         {
             if (id == null)
             {
-                throw new ArgumentNullException(nameof(id),"Bad Request");
+                throw new ArgumentNullException(nameof(id));
             }
             var query = 
-                from acc in _context.Account
-                where acc.Id == id select acc;
-            return await query.SingleOrDefaultAsync();
-
+                from acc in _context.Account.Include(acc => acc.Transactions)
+                where acc.Id == id 
+                select acc;
+            return query.SingleOrDefault();
         }
     }
 }

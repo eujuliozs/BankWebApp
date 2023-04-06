@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using BankWebApp.Models;
+using BankWebApp.Models.Enums;
 
 namespace BankWebApp.DataObjects
 {
@@ -21,7 +22,6 @@ namespace BankWebApp.DataObjects
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=10032005Jc%;database=bankdata", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql"));
             }
         }
@@ -36,8 +36,8 @@ namespace BankWebApp.DataObjects
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-        public DbSet<Account>? Account { get; set; }
-        public DbSet<TransactionRecord>? TransactionRecords { get; set; }
-
+        public DbSet<Account>? Account { get; set; } = default!;
+        public DbSet<TransactionRecord>? TransactionRecords { get; set; } = default!;
+        public DbSet<TransactionType>? TransactionTypes { get; set; } = default!;
     }
 }

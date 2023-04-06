@@ -8,7 +8,6 @@ namespace BankWebApp.Models
 {
     public class Account
     {
-     
         public int Id { get; set; }
 
         [Required(ErrorMessage ="Account's Holder name is required")] 
