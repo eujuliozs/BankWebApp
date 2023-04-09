@@ -1,4 +1,5 @@
 ﻿using BankWebApp.DataObjects;
+using BankWebApp.Models.Service.Exception;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
@@ -37,6 +38,26 @@ namespace BankWebApp.Models.Service
                 where acc.Id == id 
                 select acc;
             return query.SingleOrDefault();
+        }
+        public void UpdateBalance(int accountId,double amount, TransactionType transactionType)
+        {
+            Account acc = FindById(accountId);
+            if (acc == null) 
+            {
+                throw new DbAccountNotFoundException("Account not found in the Database");
+            }
+            if(transactionType == TransactionType.Deposit)
+            {
+                acc.Balance += amount;
+                _context.Account.Update(acc);
+                _context.SaveChanges();
+            }
+            else if(transactionType == TransactionType.Withdraw)
+            {
+                acc.Balance -= amount;
+                _context.Account.Update(acc);
+                _context.SaveChanges();
+            }
         }
     }
 }
