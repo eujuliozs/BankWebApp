@@ -10,13 +10,11 @@
     <h4>Here is where you can acces all of your operations</h4>
     <div class="col-md-6">
         <div class="list-group-horizontal-xxl">
-            <a type="button" class="btn btn-secondary btn-lg btn-block" asp-controller="TransactionRecords" asp-action="Deposit">Deposit</a>
-            <input type="hidden" asp-route-id="@Model.Id"/>
+            <a type="button" class="btn btn-secondary btn-lg btn-block" asp-controller="TransactionRecords" asp-action="Deposit" asp-route-id="@Model.Id">Deposit</a>
         </div>
         <hr />
         <div class="list-group-horizontal-xxl">
-            <a type="button" class="btn btn-secondary btn-lg btn-block" asp-controller="TransactionRecords" asp-action="WithDraw">WithDraw</a>
-            <input type="hidden" asp-route-id="@Model.Id"/>
+            <a type="button" class="btn btn-secondary btn-lg btn-block" asp-controller="TransactionRecords" asp-action="WithDraw" asp-route-id="@Model.Id">WithDraw</a>
         </div>
     </div>
 </div>

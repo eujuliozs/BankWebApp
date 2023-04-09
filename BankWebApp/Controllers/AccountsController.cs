@@ -23,7 +23,6 @@ namespace BankWebApp.Controllers
             }
             return View(acc);
         }
-        //Actions Related to account creation
         public IActionResult Create()
         {
             Account account = new Account() { Number=GenerateNumber()};
@@ -66,7 +65,7 @@ namespace BankWebApp.Controllers
             }
             try
             {
-                var query = _accountService.CheckIfLogged(viewModel.Number, viewModel.Password);
+                Account query = _accountService.CheckIfLogged(viewModel.Number, viewModel.Password);
                 if (query is null)
                 {
                     return RedirectToAction(nameof(Error), new { Message = "Account doesn't exist" });

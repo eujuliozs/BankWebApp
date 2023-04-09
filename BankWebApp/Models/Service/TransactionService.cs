@@ -9,10 +9,10 @@ namespace BankWebApp.Models.Service
         {
             _context = context;
         }
-        public async Task AddTransactionAsync(TransactionRecord tr)
+        public void AddTransaction(TransactionRecord tr)
         {
-            await _context.AddAsync(tr);
-            await _context.SaveChangesAsync();
+            _context.Add(tr);
+            _context.SaveChanges();
         }
         public List<TransactionRecord> FindAll(Account acc)
         {

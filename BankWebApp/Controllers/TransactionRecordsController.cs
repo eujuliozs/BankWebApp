@@ -33,18 +33,20 @@ namespace BankWebApp.Controllers
             return View(list);
             
         }
-        public IActionResult Deposit(int id)
+        [HttpGet]
+        public IActionResult Deposit(int? id)
         {
-            return View(new TransactionRecord { AccountId=id});
+            return View(new TransactionRecord { AccountId=id.Value});
         }
-        [HttpPost, ActionName("Deposit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DepositConfirmed(TransactionRecord Tr)
+        public IActionResult DepositConfirmed(TransactionRecord Tr)
         {
             Tr.Moment=DateTime.Now;
             Tr.TransactionType = TransactionType.Deposit;
-            await _transactionService.AddTransactionAsync(Tr);
-            return RedirectToAction(nameof(Index), Tr.AccountId);
+            _transactionService.AddTransaction(Tr);
+            return RedirectToAction(nameof(Index),new {id=Tr.AccountId});
+            
         }
         public async Task<IActionResult> Error(string Message)
         {

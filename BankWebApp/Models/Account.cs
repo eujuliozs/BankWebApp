@@ -31,7 +31,7 @@ namespace BankWebApp.Models
         [DataType(DataType.Password)]
         [StringLength(6, MinimumLength =4, ErrorMessage = "Password must be between 4 and 6 characters")]
         public string Password { get; set; }
-        public List<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
+        public ICollection<TransactionRecord> Transactions { get; set; } = new List<TransactionRecord>();
         public Account()
         {
 

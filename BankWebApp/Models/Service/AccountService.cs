@@ -27,7 +27,7 @@ namespace BankWebApp.Models.Service
             return query.FirstOrDefault();
         }
         public Account? FindById(int id)
-        {
+        { 
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
