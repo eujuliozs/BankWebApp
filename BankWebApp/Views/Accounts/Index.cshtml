@@ -16,6 +16,6 @@
         <div class="list-group-horizontal-xxl">
             <a type="button" class="btn btn-secondary btn-lg btn-block" asp-controller="TransactionRecords" asp-action="Withdraw" asp-route-id="@Model.Id">Withdraw money</a>
         </div>
-        <a asp-action="Details">Account Details</a>
+        <a asp-action="Details" asp-route-id="@Model.Id">Account Details</a>
     </div>
 </div>

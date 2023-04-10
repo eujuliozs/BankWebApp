@@ -22,6 +22,7 @@ namespace BankWebApp.Controllers
             _transactionService = transactionService;
             _accountService = accountService;
         }
+        [ActionName("TransactionRecords")]
         public IActionResult Index(int id)
         {
             var acc = _accountService.FindById(id);

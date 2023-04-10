@@ -77,6 +77,11 @@ namespace BankWebApp.Controllers
                 return RedirectToAction(nameof(Error), new { Message = ex.Message });
             }
         }
+        public IActionResult Details(int? id)
+        {
+            Account acc = _accountService.FindById(id.Value);
+            return View(acc);
+        }
 
         public async Task<IActionResult> Error(string Message)
         {
@@ -102,7 +107,6 @@ namespace BankWebApp.Controllers
                 lst += str;
             }
             return lst.ToString();
-
         }
     }
 }
