@@ -6,31 +6,33 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Moment)
-            </th>
+            </th scope="col">
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.TransactionType)
-            </th>
+            </th scope="col"> 
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
+        <tr class="table-active">
+            <td scope="row">
                 @Html.DisplayFor(modelItem => item.Moment)
-            </td>
-            <td>
+            </td >
+
+            <td scope="row">
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
-            <td>
+
+            <td scope="row">
                 @Html.DisplayFor(modelItem => item.TransactionType)
             </td>
         </tr>

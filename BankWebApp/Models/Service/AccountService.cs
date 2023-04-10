@@ -63,8 +63,8 @@ namespace BankWebApp.Models.Service
         {
             var query =
                 from acc in _context.Account
-                where acc.Id.Equals(id)
-                && password.Equals(password)
+                where acc.Id == id
+                && acc.Password == password
                 select acc;
             if(query.SingleOrDefault() is null)
             {
