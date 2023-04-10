@@ -5,29 +5,23 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-<h3>AccountId: @Model.AccountId</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="DepositConfirmed">
-            <input type="hidden" asp-for="AccountId" />
+        <form asp-action="Deposit">
             <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
-            @{
-                Model.AccountId = Model.AccountId;
-            }
+            
+            <input asp-for="AccountId" type="hidden" default-value="@Model.AccountId"/>
+
             <div class="form-group">
                 <input type="submit" value="Deposit" class="btn btn-primary"/>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 @section Scripts {
     @{

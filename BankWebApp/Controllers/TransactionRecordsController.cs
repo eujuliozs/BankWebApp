@@ -40,6 +40,7 @@ namespace BankWebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ActionName("Deposit")]
         public IActionResult DepositConfirmed(TransactionRecord Tr)
         {
             Tr.Moment=DateTime.Now;
@@ -53,7 +54,41 @@ namespace BankWebApp.Controllers
             {
                 return RedirectToAction(nameof(Error), new { Message = ex.Message });
             }
-            return RedirectToAction(nameof(Index),new {id=Tr.AccountId});
+            Account acc = _accountService.FindById(Tr.AccountId);
+            return RedirectToAction(nameof(Index),"Accounts", acc);
+        }
+        [HttpGet]
+        public IActionResult Withdraw(int? id)
+        {
+            TransactionRecord Tr = new() { AccountId = id.Value };
+            var viewModel = new WithdrawForm {Transaction=Tr};
+            return View(viewModel);
+        }
+        [HttpPost]
+        [ActionName("Withdraw")]
+        public IActionResult WithdrawConfirmed(WithdrawForm viewModel)
+        {
+            bool PasswordIsRight = _accountService.CheckPassword(viewModel.Transaction.AccountId, viewModel.Password);
+            if (PasswordIsRight) 
+            {
+                viewModel.Transaction.TransactionType = TransactionType.Withdraw;
+                viewModel.Transaction.Moment = DateTime.Now;
+                _transactionService.AddTransaction(viewModel.Transaction);
+                try 
+                { 
+                    _accountService.UpdateBalance(viewModel.Transaction.AccountId, viewModel.Transaction.Amount,TransactionType.Withdraw);
+                    Account acc = _accountService.FindById(viewModel.Transaction.AccountId);
+                    return RedirectToAction(nameof(Index), "Accounts", acc);
+                }
+                catch(ApplicationException ex)
+                {
+                    return RedirectToAction(nameof(Error), new { Message = ex.Message });
+                }
+            }
+            else
+            {
+                return RedirectToAction(nameof(Error), new { Message ="Account Info Does't match" });
+            }
         }
         public async Task<IActionResult> Error(string Message)
         {

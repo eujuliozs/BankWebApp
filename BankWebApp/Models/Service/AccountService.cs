@@ -59,5 +59,18 @@ namespace BankWebApp.Models.Service
                 _context.SaveChanges();
             }
         }
+        public bool CheckPassword(int id, string password)
+        {
+            var query =
+                from acc in _context.Account
+                where acc.Id.Equals(id)
+                && password.Equals(password)
+                select acc;
+            if(query.SingleOrDefault() is null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
