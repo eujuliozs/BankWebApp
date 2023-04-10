@@ -31,7 +31,7 @@ namespace BankWebApp.Controllers
                 return RedirectToAction(nameof(Error), new { Message = "Bad Request" });
             }
             IEnumerable<TransactionRecord> list = _transactionService.FindAll(acc);
-            return View(list);
+            return View("Index", list);
             
         }
         [HttpGet]
