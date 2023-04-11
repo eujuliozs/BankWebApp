@@ -59,7 +59,7 @@ namespace BankWebApp.Migrations
 
             modelBuilder.Entity("BankWebApp.Models.TransactionRecord", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 

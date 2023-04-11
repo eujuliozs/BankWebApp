@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankWebApp.Migrations
 {
     [DbContext(typeof(bankdataContext))]
-    [Migration("20230410181242_transactionrecordoff")]
-    partial class transactionrecordoff
+    [Migration("20230411171552_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,7 +61,7 @@ namespace BankWebApp.Migrations
 
             modelBuilder.Entity("BankWebApp.Models.TransactionRecord", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -81,7 +81,7 @@ namespace BankWebApp.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("TransactionRecord");
+                    b.ToTable("TransactionRecords");
                 });
 
             modelBuilder.Entity("BankWebApp.Models.TransactionRecord", b =>

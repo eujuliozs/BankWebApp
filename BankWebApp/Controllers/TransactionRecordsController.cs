@@ -46,9 +46,9 @@ namespace BankWebApp.Controllers
         {
             Tr.Moment=DateTime.Now;
             Tr.TransactionType = TransactionType.Deposit;
+            _transactionService.AddTransaction(Tr);
             try
             {
-                _transactionService.AddTransaction(Tr);
                 _accountService.UpdateBalance(Tr.AccountId, Tr.Amount, TransactionType.Deposit);
             }
             catch(ApplicationException ex)

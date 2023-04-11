@@ -19,10 +19,15 @@ namespace BankWebApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Holder = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, collation: "utf8mb4_0900_ai_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    HolderBirthDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Email = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_0900_ai_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Balance = table.Column<double>(type: "double", nullable: false),
                     Number = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_0900_ai_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Password = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_0900_ai_ci")
+                    Password = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: false, collation: "utf8mb4_0900_ai_ci")
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>

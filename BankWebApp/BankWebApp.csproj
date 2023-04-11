@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="DataObjects\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
