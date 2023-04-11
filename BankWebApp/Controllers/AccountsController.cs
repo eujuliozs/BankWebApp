@@ -25,8 +25,7 @@ namespace BankWebApp.Controllers
         }
         public IActionResult Create()
         {
-            Account account = new Account() { Number=GenerateNumber()};
-            return View(account);
+            return View(new Account());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -34,10 +33,11 @@ namespace BankWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(account);
+                RedirectToAction(nameof(Error), new { Message = "ModelInvalid" });
             }
             try
             {
+                account.Number = GenerateNumber();
                 await _accountService.InsertAsync(account);
             }
             catch (ApplicationException ex)

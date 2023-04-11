@@ -10,7 +10,7 @@ namespace BankWebApp.Models.Service
             _context = context;
         }
         public void AddTransaction(TransactionRecord tr)
-        {
+        {          
             _context.Add(tr);
             _context.SaveChanges();
         }

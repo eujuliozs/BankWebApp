@@ -6,7 +6,9 @@ namespace BankWebApp.Models
 {
     public class TransactionRecord
     {
-        public int? Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column(Order = 0)]
+        public int Id { get; set; }
         [DataType(DataType.Date)]
         public DateTime Moment { get; set; }
         [DisplayFormat(DataFormatString = "{0:F2}")]

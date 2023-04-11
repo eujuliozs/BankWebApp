@@ -54,10 +54,24 @@ namespace BankWebApp.Models.Service
             }
             else if(transactionType == TransactionType.Withdraw)
             {
+                if(!AvalibleBalance(accountId, amount))
+                {
+                    throw new UnavalibleBalanceException("Not enough money");
+                }
                 acc.Balance -= amount;
                 _context.Account.Update(acc);
                 _context.SaveChanges();
             }
+        }
+        public bool AvalibleBalance(int accountId, double amount)
+        {
+            Account acc = FindById(accountId);
+            if(acc.Balance >= amount)
+            {
+                return true;
+            }
+            return false;
+
         }
         public bool CheckPassword(int id, string password)
         {

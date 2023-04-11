@@ -27,6 +27,8 @@
                 <input asp-for="Password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+            
+            
 
             <hr />
             <div class="form-group row">
@@ -35,3 +37,9 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
